@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="IoC\" />
-    <Folder Include="Sale\" />
   </ItemGroup>
 
   <ItemGroup>

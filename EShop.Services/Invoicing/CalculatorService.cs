@@ -20,6 +20,8 @@ namespace EShop.Services.Invoicing
 
         public decimal GetGrossFromNet(decimal netValue, decimal tax)
         {
+            if (tax < 0) throw new ArgumentException("Tax cannot be less than 0.");
+
             decimal result = netValue + netValue * tax;
             return result;
         }

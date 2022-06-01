@@ -9,7 +9,7 @@ namespace EShop.Services.Invoicing
 {
     public interface IInvoicingService
     {
-        IEnumerable<Invoice> GetCurrentMothInvoices();
+        IEnumerable<Invoice> GetCurrentMonthInvoices();
     }
 
     public class InvoicingService : IInvoicingService
@@ -19,7 +19,7 @@ namespace EShop.Services.Invoicing
 
         }
 
-        public IEnumerable<Invoice> GetCurrentMothInvoices()
+        public IEnumerable<Invoice> GetCurrentMonthInvoices()
         {
             return new List<Invoice>()
             {

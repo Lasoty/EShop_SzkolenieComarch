@@ -1,3 +1,5 @@
+using System;
+
 namespace EShop.Api
 {
     public class WeatherForecast

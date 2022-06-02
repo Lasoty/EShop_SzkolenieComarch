@@ -36,10 +36,11 @@ namespace EShop.Services.Sale
                 OrderDate = DateTime.Now,
                 State = OrderStates.New,
                 TotalNetAmount = products.Sum(x => x.PriceNet),
-                Discount = discountService.CalculateDiscount(netAmount),
+                Discount = discount,
                 TotalGrossAmount = CalculateTotalGrossAmount(products)
             };
             
+            orderRepository.Add(order);
             return order;
         }
 

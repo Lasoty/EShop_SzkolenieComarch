@@ -26,8 +26,12 @@ namespace EShop.Services.Sale
 
         public decimal CalculateDiscount(IEnumerable<Product> orderedProducts)
         {
+            if (orderedProducts == null)
+                throw new ArgumentNullException(nameof(orderedProducts), "Parameter cannot be null.");
+
             if (!orderedProducts.Any())
                 throw new ArgumentOutOfRangeException(nameof(orderedProducts), "Ordered products must have at least one item.");
+
 
             return CalculateDiscount(orderedProducts.Sum(p => p.PriceNet));
         }

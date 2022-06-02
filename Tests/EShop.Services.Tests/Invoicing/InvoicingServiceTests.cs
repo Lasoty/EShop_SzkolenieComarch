@@ -1,4 +1,5 @@
 ﻿using EShop.Services.Invoicing;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -23,20 +24,22 @@ namespace EShop.Services.Tests.Invoicing
         {
             //Arrange
             var currentDateTime = DateTime.Now;
+            var firstDayOfMonth = new DateTime(currentDateTime.Year, currentDateTime.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
             //Act 
             var actual = invoicingService.GetCurrentMonthInvoices();
 
             //Assert
-            Assert.IsTrue(actual.All(x => x.InvoiceDate.Month == currentDateTime.Month && x.InvoiceDate.Year == currentDateTime.Year));
+            //Assert.IsTrue(actual.All(x => x.InvoiceDate.Month == currentDateTime.Month && x.InvoiceDate.Year == currentDateTime.Year));
+
+            actual.Should().AllSatisfy(x =>
+            {
+                x.Should().NotBeNull();
+                x.InvoiceDate.Should().BeOnOrAfter(firstDayOfMonth).And.BeOnOrBefore(lastDayOfMonth);
+            });
         }
 
-        [Test]
-        public void GetCurrentMothInvoicesShouldReturnExaclyOneEqualTo10()
-        {
-            var actual = invoicingService.GetCurrentMonthInvoices();
 
-            Assert.That(actual, Has.Exactly(1).EqualTo(10));
-        }
     }
 }

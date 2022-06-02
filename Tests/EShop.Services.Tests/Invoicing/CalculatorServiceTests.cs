@@ -1,4 +1,5 @@
 ﻿using EShop.Services.Invoicing;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,9 @@ namespace EShop.Services.Tests.Invoicing
             decimal tax = -1m;
 
             //Assert
-            Assert.Throws<ArgumentException>(() => calculatorService.GetGrossFromNet(netValue, tax));
+            //Assert.Throws<ArgumentException>(() => calculatorService.GetGrossFromNet(netValue, tax));
+            calculatorService.Invoking(cs => calculatorService.GetGrossFromNet(netValue, tax))
+                .Should().Throw<ArgumentException>().WithMessage("Tax cannot be less than 0.");
         }
 
         [TearDown]

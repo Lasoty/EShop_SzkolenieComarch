@@ -38,11 +38,6 @@ namespace EShop.Services.xTests.Sale
 
         public static IEnumerable<object> emptyProductList = new List<Product>();
 
-        [Theory]
-        [InlineData(new Product[] { })]
-        public void SomeMethodForEmptyListShouldThrowException(List<Product> products)
-        {
-
-        }
+        
     }
 }

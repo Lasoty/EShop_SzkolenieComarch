@@ -1,5 +1,6 @@
 ﻿using EShop.Data.Entities;
 using EShop.Data.Repositories;
+using EShop.Services.Sale;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,21 @@ namespace EShop.Api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly IDiscountService discountService;
         private readonly IKeyRepository<Product, int> productsRepository;
 
-        public ProductsController(IKeyRepository<Product, int> productsRepository)
+        public ProductsController(
+            IDiscountService discountService,
+            IKeyRepository<Product, int> productsRepository)
         {
+            this.discountService = discountService;
             this.productsRepository = productsRepository;
         }
         // GET: api/<ProductsController>
         [HttpGet]
         public IEnumerable<Product> Get()
         {
+            discountService.CalculateDiscount(123);
             return productsRepository.GetAll().ToList();
         }
 

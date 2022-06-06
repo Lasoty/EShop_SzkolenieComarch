@@ -1,5 +1,8 @@
-﻿using EShop.Data.Context;
+﻿using Autofac;
+using EShop.Data.Context;
+using EShop.Data.IoC;
 using EShop.Data.Repositories;
+using EShop.Services.IoC;
 using EShop.Services.Sale;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +25,6 @@ public class Startup
         {
             options.UseInMemoryDatabase("EShopDb");
         });
-
-        services.AddScoped<ISaleService, SaleService>();
-        services.AddScoped<IDiscountService, DiscountService>();
-        services.AddScoped<ITaxService, TaxGbService>();
-        services.AddScoped<ITaxService, TaxPlService>();
-        services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
-        services.AddTransient(typeof(IKeyRepository<,>), typeof(KeyRepository<,>));
 
         services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,5 +50,11 @@ public class Startup
         });
 
         Seeder.Seed(dbContext);
+    }
+
+    public void ConfigureContainer(ContainerBuilder builder)
+    {
+        builder.RegisterModule(new DataModule());
+        builder.RegisterModule(new ServicesModule());
     }
 }
